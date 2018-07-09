@@ -1,67 +1,56 @@
 package com.otto.codesamples;
 
 import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    static int sum;
+    static int inputInt;
 
-        Scanner sc = new Scanner(new File("C:\\Users\\Asguard\\IdeaProjects\\StupidABBAChief\\input.txt"));
-        PrintWriter pw = new PrintWriter(new File("C:\\Users\\Asguard\\IdeaProjects\\StupidABBAChief\\output.txt"));
-
-        String number1 = sc.next();
-        String number2 = sc.next();
-        String number3 = sc.next();
-
-        String bigger = getBiggest(number1, number2);
-        String biggest = getBiggest(bigger, number3);
-        pw.println(biggest);
-        pw.close();
-
-
+    public static void main(String[] args) {
+        try {
+            inputInt = getInput();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            calculate(inputInt);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static String getBiggest(String a, String b) {
+    public static int getInput() throws FileNotFoundException {
+        Scanner sc = new Scanner(new File("C:\\Users\\Asguard\\IdeaProjects\\Sum\\input.txt"));
+        int i = sc.nextInt();
+        return i;
+    }
 
-        if (a.equals(b)) {
-            return a;
-        } else {
+    public static void writeOutput() throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(new File("C:\\Users\\Asguard\\IdeaProjects\\Sum\\output.txt"));
+        pw.print(sum);
+        pw.close();
+    }
 
-            int lengthA = a.length();
-            int lengthB = b.length();
-
-            if (lengthA != lengthB) {
-                if (lengthA > lengthB) {
-                    return a;
-                } else return b;
-
+    public static void calculate ( int i) throws FileNotFoundException {
+            if (i == 1) {
+                sum = sum + i;
+                writeOutput();
             } else {
-                for (int i = 0; i < lengthA; i++) {
-                    char c1 = a.charAt(i);
-                    char c2 = b.charAt(i);
-                    if (c1 == c2) {
-                        continue;
-
-                    } else {
-                        if (c1 > c2) {
-                            return a;
-
-                        } else {
-                            return b;
-
-                        }
-
-                    }
+                if (i <= 0) {
+                    sum = sum + i;
+                    i++;
+                    calculate(i);
+                } else {
+                    sum = sum + i;
+                    i--;
+                    calculate(i);
                 }
             }
 
-
         }
-
-        return "You'll never get to this point, but I still have to write it";
     }
-}
 
 
 
